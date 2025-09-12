@@ -1,6 +1,7 @@
 package mate.academy.app.repository.impl;
 
 import jakarta.persistence.criteria.CriteriaQuery;
+import java.util.List;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
 import org.hibernate.Session;
@@ -8,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public class BookRepositoryImpl implements BookRepository {
@@ -18,6 +18,7 @@ public class BookRepositoryImpl implements BookRepository {
     public BookRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public Book save(Book book) {
         Session session = null;
@@ -33,7 +34,7 @@ public class BookRepositoryImpl implements BookRepository {
                 transaction.rollback();
             }
             throw new RuntimeException("Cannot save book with title: "
-                    + book.getTitle() , e);
+                    + book.getTitle(), e);
         } finally {
             if (session != null) {
                 session.close();
@@ -46,6 +47,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<Book> query = session.getCriteriaBuilder()
                     .createQuery(Book.class);
+            query.from(Book.class);
             return session.createQuery(query).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Cannot find books", e);
