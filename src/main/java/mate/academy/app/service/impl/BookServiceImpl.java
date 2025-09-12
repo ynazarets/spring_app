@@ -1,8 +1,8 @@
-package mate.academy.spring_app.service.impl;
+package mate.academy.app.service.impl;
 
-import mate.academy.spring_app.model.Book;
-import mate.academy.spring_app.repository.BookRepository;
-import mate.academy.spring_app.service.BookService;
+import mate.academy.app.model.Book;
+import mate.academy.app.repository.BookRepository;
+import mate.academy.app.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

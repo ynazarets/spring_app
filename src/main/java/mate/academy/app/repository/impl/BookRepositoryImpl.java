@@ -1,8 +1,8 @@
-package mate.academy.spring_app.repository.impl;
+package mate.academy.app.repository.impl;
 
 import jakarta.persistence.criteria.CriteriaQuery;
-import mate.academy.spring_app.model.Book;
-import mate.academy.spring_app.repository.BookRepository;
+import mate.academy.app.model.Book;
+import mate.academy.app.repository.BookRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

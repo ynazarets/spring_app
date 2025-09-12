@@ -1,6 +1,6 @@
-package mate.academy.spring_app.service;
+package mate.academy.app.service;
 
-import mate.academy.spring_app.model.Book;
+import mate.academy.app.model.Book;
 
 import java.util.List;
 

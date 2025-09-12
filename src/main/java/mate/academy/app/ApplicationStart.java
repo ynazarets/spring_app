@@ -1,13 +1,12 @@
-package mate.academy.spring_app;
+package mate.academy.app;
 
-import mate.academy.spring_app.model.Book;
-import mate.academy.spring_app.service.BookService;
+import mate.academy.app.model.Book;
+import mate.academy.app.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import java.math.BigDecimal;
 
 @SpringBootApplication

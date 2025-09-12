@@ -1,4 +1,4 @@
-package mate.academy.spring_app.model;
+package mate.academy.app.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,30 +6,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import java.math.BigDecimal;
 
 @Entity
 @Data
+@NoArgsConstructor(force = true)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @NonNull
     @Column(nullable = false)
-    String title;
+    private String title;
     @NonNull
     @Column(nullable = false)
-    String author;
+    private String author;
     @NonNull
     @Column(nullable = false, unique = true)
-    String isbn;
+    private String isbn;
     @NonNull
     @Column(nullable = false)
-    BigDecimal price;
-    String description;
-    String coverImage;
-
-    public Book() {
-    }
+    private BigDecimal price;
+    private String description;
+    private String coverImage;
 }
