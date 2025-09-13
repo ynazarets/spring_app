@@ -1,7 +1,10 @@
 package mate.academy.app.repository.impl;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
+import mate.academy.app.exception.DataProcessingException;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
 import org.hibernate.Session;
@@ -33,7 +36,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot save book with title: "
+            throw new DataProcessingException("Cannot save book with title: "
                     + book.getTitle(), e);
         } finally {
             if (session != null) {
@@ -45,12 +48,13 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaQuery<Book> query = session.getCriteriaBuilder()
-                    .createQuery(Book.class);
-            query.from(Book.class);
-            return session.createQuery(query).getResultList();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+            Root<Book> root = criteriaQuery.from(Book.class);
+            criteriaQuery.select(root);
+            return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Cannot find books", e);
+            throw new DataProcessingException("Cannot find books", e);
         }
     }
 }
