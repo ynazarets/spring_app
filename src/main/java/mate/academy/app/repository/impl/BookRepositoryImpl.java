@@ -1,9 +1,11 @@
 package mate.academy.app.repository.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.exception.DataProcessingException;
 import mate.academy.app.model.Book;
@@ -51,6 +53,18 @@ public class BookRepositoryImpl implements BookRepository {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Cannot find books", e);
+        }
+    }
+
+    @Override
+    public Book getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Optional<Book> optionalBook = session.createQuery("from Book b where b.id = :id",
+                            Book.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
+            return optionalBook.orElseThrow(() ->
+                    new EntityNotFoundException("Can not find Book with id: " + id));
         }
     }
 }

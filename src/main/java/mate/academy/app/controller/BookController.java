@@ -2,9 +2,12 @@ package mate.academy.app.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.app.model.Book;
+import mate.academy.app.dto.BookDto;
+import mate.academy.app.dto.BookDtoWithoutId;
+import mate.academy.app.dto.CreateBookRequestDto;
 import mate.academy.app.service.BookService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +20,17 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> findAll() {
+    public List<BookDto> findAll() {
         return bookService.findAll();
     }
 
     @PostMapping
-    public Book save(@RequestBody Book book) {
-        return bookService.save(book);
+    public BookDtoWithoutId createBook(@RequestBody CreateBookRequestDto requestDto) {
+        return bookService.save(requestDto);
+    }
+
+    @GetMapping("/{id}")
+    public BookDto getBookById(@PathVariable Long id) {
+        return bookService.getById(id);
     }
 }
