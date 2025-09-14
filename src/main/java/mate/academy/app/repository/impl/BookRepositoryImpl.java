@@ -1,6 +1,5 @@
 package mate.academy.app.repository.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.exception.DataProcessingException;
+import mate.academy.app.exception.EntityNotFoundException;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
 import org.hibernate.Session;
