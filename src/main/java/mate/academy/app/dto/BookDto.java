@@ -1,7 +1,6 @@
 package mate.academy.app.dto;
 
 import java.math.BigDecimal;
-
 import lombok.Getter;
 import lombok.Setter;
 
