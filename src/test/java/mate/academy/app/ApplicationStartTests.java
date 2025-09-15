@@ -1,10 +1,10 @@
-package mate.academy.spring_app;
+package mate.academy.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SpringAppApplicationTests {
+@SpringBootTest(classes = ApplicationStart.class)
+class ApplicationStartTests {
 
 	@Test
 	void contextLoads() {
