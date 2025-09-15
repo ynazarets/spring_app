@@ -3,7 +3,6 @@ package mate.academy.app.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.dto.BookDto;
-import mate.academy.app.dto.BookDtoWithoutId;
 import mate.academy.app.dto.CreateBookRequestDto;
 import mate.academy.app.mapper.BookMapper;
 import mate.academy.app.model.Book;
@@ -18,9 +17,9 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public BookDtoWithoutId save(CreateBookRequestDto requestDto) {
+    public BookDto save(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
-        return bookMapper.toBookDtoWithoutId(bookRepository.save(book));
+        return bookMapper.toBookDto(bookRepository.save(book));
     }
 
     @Override

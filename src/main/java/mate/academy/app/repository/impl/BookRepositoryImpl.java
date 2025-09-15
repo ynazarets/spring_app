@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.exception.DataProcessingException;
-import mate.academy.app.exception.EntityNotFoundException;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
 import org.hibernate.Session;
@@ -64,7 +63,7 @@ public class BookRepositoryImpl implements BookRepository {
                     .setParameter("id", id)
                     .uniqueResultOptional();
             return optionalBook.orElseThrow(() ->
-                    new EntityNotFoundException("Can not find Book with id: " + id));
+                    new DataProcessingException("Can not find Book with id: " + id));
         }
     }
 }
