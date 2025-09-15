@@ -2,6 +2,9 @@ package mate.academy.app.service.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import mate.academy.app.dto.BookDto;
+import mate.academy.app.dto.CreateBookRequestDto;
+import mate.academy.app.mapper.BookMapper;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
 import mate.academy.app.service.BookService;
@@ -11,14 +14,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(CreateBookRequestDto requestDto) {
+        Book book = bookMapper.toModel(requestDto);
+        return bookMapper.toBookDto(bookRepository.save(book));
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<BookDto> findAll() {
+        return bookRepository.findAll().stream()
+                .map(bookMapper::toBookDto)
+                .toList();
+    }
+
+    @Override
+    public BookDto getById(Long id) {
+        return bookMapper.toBookDto(bookRepository.getById(id));
     }
 }
