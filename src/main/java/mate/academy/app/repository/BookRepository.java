@@ -1,13 +1,9 @@
 package mate.academy.app.repository;
 
-import java.util.List;
+import mate.academy.app.dto.BookDto;
 import mate.academy.app.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookRepository {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Book save(Book book);
-
-    List<Book> findAll();
-
-    Book getById(Long id);
 }
