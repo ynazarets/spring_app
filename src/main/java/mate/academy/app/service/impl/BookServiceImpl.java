@@ -1,6 +1,5 @@
 package mate.academy.app.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.dto.BookDto;
