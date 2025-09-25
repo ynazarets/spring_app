@@ -1,5 +1,6 @@
 package mate.academy.app.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,27 +28,37 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
+    @Operation(summary = "Get all books",
+            description = "Get all books with pagination.")
     public Page<BookDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get book by id",
+            description = "Get book by id from input")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.getById(id);
     }
 
     @GetMapping("/search")
+    @Operation(summary = "Search books",
+            description = "Search books with parameters from input(title, author, isbn)")
     public List<BookDto> search(BookSearchParametersDto searchParameters) {
         return bookService.search(searchParameters);
     }
 
     @PostMapping
+    @Operation(summary = "Create a new book",
+            description = "Create a new book")
     @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update book",
+            description = "Update data in book by id")
     public BookDto updateBookById(@PathVariable @Valid Long id,
                                   @RequestBody CreateBookRequestDto requestDto) {
         return bookService.update(id, requestDto);
@@ -55,6 +66,8 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
+    @Operation(summary = "SoftDelete book",
+            description = "SoftDelete book")
     public void deleteBookById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
