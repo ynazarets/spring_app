@@ -1,5 +1,6 @@
 package mate.academy.app.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.dto.user.UserRegistrationRequestDto;
@@ -18,6 +19,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/registration")
+    @Operation(summary = "Registration a new User",
+            description = "Registration a new user and checking input data")
     UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.registerUser(requestDto);
