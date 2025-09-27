@@ -31,6 +31,6 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column
     private String shippingAddress;
 }

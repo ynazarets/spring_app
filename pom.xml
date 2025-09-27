@@ -153,17 +153,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>rollback-user-fix</id>
-            <properties>
-                <liquibase.changeSetId>create-user-table</liquibase.changeSetId>
-                <liquibase.changeSetAuthor>root</liquibase.changeSetAuthor>
-
-                <liquibase.changesetPath>changes/02-create-user-table.yaml</liquibase.changesetPath>
-
-                <liquibase.force>true</liquibase.force>
-            </properties>
-        </profile>
-    </profiles>
 </project>
