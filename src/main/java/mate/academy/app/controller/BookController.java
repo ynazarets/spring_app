@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.dto.BookDto;
+import mate.academy.app.dto.BookSearchParametersDto;
 import mate.academy.app.dto.CreateBookRequestDto;
 import mate.academy.app.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -28,15 +29,20 @@ public class BookController {
         return bookService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public BookDto getBookById(@PathVariable Long id) {
+        return bookService.getById(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
-    }
-
-    @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id) {
-        return bookService.getById(id);
     }
 
     @PutMapping("/{id}")
