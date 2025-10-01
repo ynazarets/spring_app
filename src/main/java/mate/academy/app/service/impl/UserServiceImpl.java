@@ -28,9 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(requestDto.getPassword());
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
-        if (requestDto.getShippingAddress() != null) {
-            user.setShippingAddress(requestDto.getShippingAddress());
-        }
+        user.setShippingAddress(requestDto.getShippingAddress());
         return userMapper.toUserResponseDto(userRepository.save(user));
     }
 }

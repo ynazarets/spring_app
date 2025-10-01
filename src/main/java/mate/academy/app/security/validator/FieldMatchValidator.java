@@ -2,6 +2,7 @@ package mate.academy.app.security.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Objects;
 import mate.academy.app.dto.user.UserRegistrationRequestDto;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -28,8 +29,7 @@ public class FieldMatchValidator
             final Object secondObj = new BeanWrapperImpl(userRegistrationRequestDto)
                     .getPropertyValue(confirmPassword);
 
-            boolean isValid = firstObj == null && secondObj == null
-                    || firstObj != null && firstObj.equals(secondObj);
+            boolean isValid = Objects.equals(firstObj, secondObj);
 
             if (!isValid) {
                 constraintValidatorContext.buildConstraintViolationWithTemplate(message)
