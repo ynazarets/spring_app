@@ -5,3 +5,9 @@ databaseChangeLog:
       file: db/changelog/changes/02-create-user-table.yaml
   - include:
       file: db/changelog/changes/03-update-user-table.yaml
+  - include:
+      file: db/changelog/changes/04-update-user-table.yaml
+  - include:
+      file: db/changelog/changes/05-create-role-table.yaml
+  - include:
+      file: db/changelog/changes/06-add-to-user-table-role-column.yaml
