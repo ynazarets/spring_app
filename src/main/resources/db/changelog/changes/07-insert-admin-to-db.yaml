@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 07-insert-admin-user
+      author: root
+      comment: Добавление первого пользователя-администратора (admin@library.com) и назначение ему роли ADMIN.
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: admin@library.com
+              - column:
+                  name: password
+                  value: $2a$10$wL4P9E5yJ8iS3TjK8m/yL.6iX0P6H0A7wV0YV6B3H8e2G3A6D6I9S
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: User
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@library.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role_name = 'ADMIN')
