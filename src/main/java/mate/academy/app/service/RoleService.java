@@ -1,9 +1,10 @@
 package mate.academy.app.service;
 
-import mate.academy.app.model.Role;
 import java.util.Optional;
+import mate.academy.app.model.Role;
+import mate.academy.app.model.enums.RoleName;
 
 public interface RoleService {
 
-    Optional<Role> findRoleByName(String name);
+    Optional<Role> findRoleByName(RoleName roleName);
 }
