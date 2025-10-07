@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 08-assign-default-user-role
       author: root
-      comment: Назначение роли USER всем существующим пользователям, у которых нет назначенных ролей.
+      comment: Assign the USER role to all existing users who do not have any roles assigned.
       changes:
         - sql:
             dbms: mysql

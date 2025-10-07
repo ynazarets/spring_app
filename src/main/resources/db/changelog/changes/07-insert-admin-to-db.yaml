@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 07-insert-admin-user
       author: root
-      comment: Добавление первого пользователя-администратора (admin@library.com) и назначение ему роли ADMIN.
+      comment: Adding the first administrator user (admin@library.com) and assigning him the ADMIN role.
       changes:
         - insert:
             tableName: users

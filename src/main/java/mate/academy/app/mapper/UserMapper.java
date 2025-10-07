@@ -1,7 +1,7 @@
 package mate.academy.app.mapper;
 
 import mate.academy.app.config.MapperConfig;
-import mate.academy.app.dto.book.CreateBookRequestDto;
+import mate.academy.app.dto.user.UserRegistrationRequestDto;
 import mate.academy.app.dto.user.UserResponseDto;
 import mate.academy.app.model.User;
 import org.mapstruct.Mapper;
@@ -11,6 +11,6 @@ public interface UserMapper {
 
     UserResponseDto toUserResponseDto(User user);
 
-    User toModelBook(CreateBookRequestDto requestDto);
+    User toModel(UserRegistrationRequestDto requestDto);
 
 }
