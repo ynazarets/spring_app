@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 08-assign-default-user-role
+      author: root
+      comment: Assign the USER role to all existing users who do not have any roles assigned.
+      changes:
+        - sql:
+            dbms: mysql
+            sql: |
+              INSERT INTO users_roles (user_id, role_id)
+              SELECT 
+                u.id AS user_id, 
+                (SELECT id FROM roles WHERE role_name = 'USER') AS role_id
+              FROM users u
+              LEFT JOIN users_roles ur ON u.id = ur.user_id
+              WHERE ur.user_id IS NULL;
