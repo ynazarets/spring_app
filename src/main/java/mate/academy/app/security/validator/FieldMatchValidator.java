@@ -3,7 +3,7 @@ package mate.academy.app.security.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Objects;
-import mate.academy.app.dto.user.UserRegistrationRequestDto;
+import mate.academy.app.dto.user.reg.UserRegistrationRequestDto;
 import org.springframework.beans.BeanWrapperImpl;
 
 public class FieldMatchValidator

@@ -1,4 +1,4 @@
-package mate.academy.app.dto.user;
+package mate.academy.app.dto.user.reg;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
