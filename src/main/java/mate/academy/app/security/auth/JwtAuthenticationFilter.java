@@ -1,5 +1,7 @@
 package mate.academy.app.security.auth;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String TOKEN_HEADER = "Bearer ";
-    private static final int BEGIN_INDEX = 7;
-
+    private static final String BEARER_TOKEN_PREFIX = "Bearer ";
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
@@ -45,8 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_HEADER)) {
-            return bearerToken.substring(BEGIN_INDEX);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TOKEN_PREFIX)) {
+            return bearerToken.substring(BEARER_TOKEN_PREFIX.length());
         }
         return null;
     }
