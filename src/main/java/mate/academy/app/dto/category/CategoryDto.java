@@ -2,6 +2,9 @@ package mate.academy.app.dto.category;
 
 import lombok.Getter;
 import lombok.Setter;
+import mate.academy.app.dto.book.BookDto;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
