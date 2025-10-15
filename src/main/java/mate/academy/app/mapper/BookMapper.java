@@ -5,18 +5,14 @@ import mate.academy.app.dto.book.BookDto;
 import mate.academy.app.dto.book.CreateBookRequestDto;
 import mate.academy.app.model.Book;
 import mate.academy.app.model.Category;
-import mate.academy.app.repository.CategoryRepository;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-
 import java.util.List;
-import java.util.Set;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
-
-
 
     Book toModel(CreateBookRequestDto requestDto);
 
@@ -34,9 +30,11 @@ public interface BookMapper {
         }
     }
     @AfterMapping
-    default void setCategories(@MappingTarget Book book, CreateBookRequestDto requestDto) {
+    default void setCategories(@MappingTarget Book book,
+                               CreateBookRequestDto requestDto,
+                               @Context CategoryMapperHelper helper) {
         if (requestDto.getCategoryIds() != null) {
-            Set<Category> categories = CategoryRepository
+            book.setCategories(helper.mapCategoryIdsToCategory(requestDto.getCategoryIds()));
         }
     }
 }
