@@ -3,6 +3,7 @@ package mate.academy.app.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.app.dto.book.BookDto;
+import mate.academy.app.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.app.dto.book.BookSearchParametersDto;
 import mate.academy.app.dto.book.CreateBookRequestDto;
 import mate.academy.app.exception.EntityNotFoundException;
@@ -67,8 +68,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<BookDto> getBooksByCategoryId(Long id, Pageable pageable) {
+    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
         return bookRepository.findAllByCategoriesId(id, pageable)
-                .map(bookMapper::toBookDto);
+                .map(bookMapper::toBookDtoWithoutCategoryIds);
     }
 }

@@ -3,6 +3,7 @@ package mate.academy.app.mapper;
 import java.util.List;
 import mate.academy.app.config.MapperConfig;
 import mate.academy.app.dto.book.BookDto;
+import mate.academy.app.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.app.dto.book.CreateBookRequestDto;
 import mate.academy.app.model.Book;
 import mate.academy.app.model.Category;
@@ -17,6 +18,8 @@ public interface BookMapper {
     Book toModel(CreateBookRequestDto requestDto);
 
     BookDto toBookDto(Book book);
+
+    BookDtoWithoutCategoryIds toBookDtoWithoutCategoryIds(Book book);
 
     void updateBookFromDto(CreateBookRequestDto requestDto, @MappingTarget Book book);
 

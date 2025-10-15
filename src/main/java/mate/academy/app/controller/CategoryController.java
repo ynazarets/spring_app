@@ -2,9 +2,8 @@ package mate.academy.app.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.app.dto.book.BookDto;
+import mate.academy.app.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.app.dto.category.CategoryDto;
 import mate.academy.app.dto.category.CreateCategoryRequestDto;
 import mate.academy.app.service.BookService;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
@@ -33,7 +32,7 @@ public class CategoryController {
     @GetMapping
     @Operation(summary = "Get categories",
             description = "Get all categories")
-    public List<CategoryDto> getAll(Pageable pageable) {
+    public Page<CategoryDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
@@ -48,7 +47,8 @@ public class CategoryController {
     @GetMapping("/{id}/books")
     @Operation(summary = "Get books by category id",
             description = "Get all books by category id")
-    public Page<BookDto> getBooksByCategoryId(@PathVariable Long id, Pageable pageable) {
+    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
+                                                                Pageable pageable) {
         return bookService.getBooksByCategoryId(id, pageable);
     }
 
@@ -56,7 +56,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create category", description = "Creates a new category with valid input")
-    public CategoryDto createCategory(CreateCategoryRequestDto categoryDto) {
+    public CategoryDto createCategory(@RequestBody @Valid CreateCategoryRequestDto categoryDto) {
         return categoryService.save(categoryDto);
     }
 
@@ -64,8 +64,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Update category by id", description = "Update category by id")
-    public CategoryDto updateCategory(@PathVariable @Valid Long id,
-                                      @RequestBody CreateCategoryRequestDto categoryDto) {
+    public CategoryDto updateCategory(@PathVariable Long id,
+                                      @RequestBody @Valid CreateCategoryRequestDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
 
