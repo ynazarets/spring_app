@@ -9,6 +9,7 @@ import mate.academy.app.exception.EntityNotFoundException;
 import mate.academy.app.mapper.BookMapper;
 import mate.academy.app.model.Book;
 import mate.academy.app.repository.BookRepository;
+import mate.academy.app.repository.CategoryRepository;
 import mate.academy.app.repository.specification.BookSpecificationBuilder;
 import mate.academy.app.service.BookService;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final CategoryRepository categoryRepository;
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
@@ -62,5 +64,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(bookSpecification).stream()
                 .map(bookMapper::toBookDto)
                 .toList();
+    }
+
+    @Override
+    public Page<BookDto> getBooksByCategoryId(Long id, Pageable pageable) {
+        return bookRepository.findAllByCategoriesId(id, pageable)
+                .map(bookMapper::toBookDto);
     }
 }

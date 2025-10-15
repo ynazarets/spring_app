@@ -1,19 +1,20 @@
 package mate.academy.app.service;
 
-import mate.academy.app.dto.category.CategoryDto;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
+import mate.academy.app.dto.category.CategoryDto;
+import mate.academy.app.dto.category.CreateCategoryRequestDto;
+import org.springframework.data.domain.Pageable;
 
 public interface CategoryService {
 
-    List<CategoryDto> findAll();
+    List<CategoryDto> findAll(Pageable pageable);
 
     CategoryDto getById(Long id);
 
-    CategoryDto save(CategoryDto categoryDto);
+    CategoryDto save(CreateCategoryRequestDto categoryDto);
 
-    CategoryDto update(Long id, CategoryDto categoryDto);
+    CategoryDto update(Long id, CreateCategoryRequestDto categoryDto);
 
     void deleteById(Long id);
+
 }

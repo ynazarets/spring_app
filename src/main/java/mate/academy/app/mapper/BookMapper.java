@@ -1,5 +1,6 @@
 package mate.academy.app.mapper;
 
+import java.util.List;
 import mate.academy.app.config.MapperConfig;
 import mate.academy.app.dto.book.BookDto;
 import mate.academy.app.dto.book.CreateBookRequestDto;
@@ -9,7 +10,6 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import java.util.List;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -29,6 +29,7 @@ public interface BookMapper {
             bookDto.setCategoriesId(categoriesId);
         }
     }
+
     @AfterMapping
     default void setCategories(@MappingTarget Book book,
                                CreateBookRequestDto requestDto,

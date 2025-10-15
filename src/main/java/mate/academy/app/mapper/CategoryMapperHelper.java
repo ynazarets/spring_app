@@ -1,14 +1,12 @@
 package mate.academy.app.mapper;
 
-import lombok.RequiredArgsConstructor;
-import mate.academy.app.dto.category.CategoryDto;
-import mate.academy.app.model.Category;
-import mate.academy.app.repository.CategoryRepository;
-import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import mate.academy.app.model.Category;
+import mate.academy.app.repository.CategoryRepository;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
