@@ -70,6 +70,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete category by id",
             description = "Delete category by id")
     public void deleteCategory(@PathVariable Long id) {

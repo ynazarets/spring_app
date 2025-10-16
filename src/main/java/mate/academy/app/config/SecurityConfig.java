@@ -3,6 +3,7 @@ package mate.academy.app.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -45,6 +46,10 @@ public class SecurityConfig {
                                         "/auth/**",
                                         "/error"
                                 )
+                                .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/books/**")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/categories/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
