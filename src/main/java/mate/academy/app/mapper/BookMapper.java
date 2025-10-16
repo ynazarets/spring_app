@@ -12,7 +12,7 @@ import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = CategoryMapperHelper.class)
 public interface BookMapper {
 
     Book toModel(CreateBookRequestDto requestDto);
