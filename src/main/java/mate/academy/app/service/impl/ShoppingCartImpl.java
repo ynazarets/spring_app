@@ -22,15 +22,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ShoppingCartImpl implements ShoppingCartService {
+
+    private static final String SHOPPING_CART_NOT_FOUND_ERROR
+            = "Can not find shopping cart for user with id: ";
+    private static final String CART_ITEM_NOT_FOUND_ERROR
+            = "Can not find cart item by id: ";
+    private static final String BOOK_NOT_FOUND_ERROR
+            = "Can not find book by id: ";
+
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final BookRepository bookRepository;
     private final ShoppingCartMapper shoppingCartMapper;
     private final CartItemMapper cartItemMapper;
-
-    private static final String SHOPPING_CART_NOT_FOUND_ERROR = "Can not find shopping cart for user with id: ";
-    private static final String CART_ITEM_NOT_FOUND_ERROR = "Can not find cart item by id: ";
-    private static final String BOOK_NOT_FOUND_ERROR = "Can not find book by id: ";
 
     @Override
     @Transactional
@@ -53,10 +57,13 @@ public class ShoppingCartImpl implements ShoppingCartService {
     @Transactional
     public CartItemDto addBookToCart(Long userId, CreateCartItemRequestDto requestDto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR + userId));
+                .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
+                        + userId));
         Book book = bookRepository.findById(requestDto.getBookId())
-                .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND_ERROR + requestDto.getBookId()));
-        return cartItemRepository.findByShoppingCartIdAndBookId(shoppingCart.getId(), requestDto.getBookId())
+                .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND_ERROR
+                        + requestDto.getBookId()));
+        return cartItemRepository.findByShoppingCartIdAndBookId(shoppingCart.getId(),
+                        requestDto.getBookId())
                 .map(cartItem -> {
                     cartItem.setQuantity(cartItem.getQuantity() + requestDto.getQuantity());
                     return cartItemMapper.toDto(cartItemRepository.save(cartItem));
@@ -77,9 +84,11 @@ public class ShoppingCartImpl implements ShoppingCartService {
                                               Long cartItemId,
                                               UpdateCartItemRequestDto requestDto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR + userId));
-        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(userId, cartItemId)
-                .orElseThrow(() -> new EntityNotFoundException(CART_ITEM_NOT_FOUND_ERROR + cartItemId));
+                .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
+                        + userId));
+        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(userId, shoppingCart.getId())
+                .orElseThrow(() -> new EntityNotFoundException(CART_ITEM_NOT_FOUND_ERROR
+                        + cartItemId));
         cartItem.setQuantity(requestDto.getQuantity());
         return cartItemMapper.toDto(cartItemRepository.save(cartItem));
     }
@@ -90,8 +99,10 @@ public class ShoppingCartImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
                         + userId));
-        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(cartItemId, shoppingCart.getId())
-                .orElseThrow(() -> new EntityNotFoundException(CART_ITEM_NOT_FOUND_ERROR + cartItemId));
+        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(cartItemId,
+                        shoppingCart.getId())
+                .orElseThrow(() -> new EntityNotFoundException(CART_ITEM_NOT_FOUND_ERROR
+                        + cartItemId));
         cartItemRepository.delete(cartItem);
     }
 }
