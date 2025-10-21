@@ -38,7 +38,8 @@ public class ShoppingCartImpl implements ShoppingCartService {
     @Override
     @Transactional
     public ShoppingCartDto createShoppingCart(User user) {
-        ShoppingCart shoppingCart = shoppingCartMapper.mapUserToShoppingCart(user);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUser(user);
         shoppingCartRepository.save(shoppingCart);
         return shoppingCartMapper.toDto(shoppingCart);
     }
