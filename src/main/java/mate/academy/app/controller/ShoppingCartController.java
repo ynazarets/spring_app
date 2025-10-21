@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mate.academy.app.dto.cartitem.CartItemDto;
 import mate.academy.app.dto.cartitem.CreateCartItemRequestDto;
 import mate.academy.app.dto.cartitem.UpdateCartItemRequestDto;
 import mate.academy.app.dto.shoppingcart.ShoppingCartDto;
@@ -47,7 +46,7 @@ public class ShoppingCartController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Add book to cart",
             description = "Add book to cartItem by user id")
-    public CartItemDto addBookToCart(Authentication authentication,
+    public ShoppingCartDto addBookToCart(Authentication authentication,
                                  @RequestBody @Valid CreateCartItemRequestDto requestDto
     ) {
         Long userId = getUserIdFromAuthentication(authentication);
@@ -58,7 +57,7 @@ public class ShoppingCartController {
     @PutMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Update item quantity",
             description = "Changes the quantity of the specified item in the cart.")
-    public CartItemDto updateCartItemQuantity(
+    public ShoppingCartDto updateCartItemQuantity(
             Authentication authentication,
             @PathVariable Long cartItemId,
             @RequestBody @Valid UpdateCartItemRequestDto requestDto
@@ -78,13 +77,7 @@ public class ShoppingCartController {
     }
 
     private Long getUserIdFromAuthentication(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof User user) {
-            return user.getId();
-        }
-        return null;
+        User principal = (User) authentication.getPrincipal();
+        return principal.getId();
     }
 }

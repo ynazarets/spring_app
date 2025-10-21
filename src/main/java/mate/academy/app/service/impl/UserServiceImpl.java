@@ -13,6 +13,7 @@ import mate.academy.app.model.User;
 import mate.academy.app.model.enums.RoleName;
 import mate.academy.app.repository.RoleRepository;
 import mate.academy.app.repository.UserRepository;
+import mate.academy.app.service.ShoppingCartService;
 import mate.academy.app.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserResponseDto registerUser(UserRegistrationRequestDto requestDto)
@@ -40,6 +42,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Can't find role by name: "
                         + RoleName.USER.name()));
         user.setRoles(Set.of(userRole));
-        return userMapper.toUserResponseDto(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+        shoppingCartService.createShoppingCart(savedUser);
+        return userMapper.toUserResponseDto(savedUser);
     }
 }

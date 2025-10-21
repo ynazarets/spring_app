@@ -1,6 +1,5 @@
 package mate.academy.app.service;
 
-import mate.academy.app.dto.cartitem.CartItemDto;
 import mate.academy.app.dto.cartitem.CreateCartItemRequestDto;
 import mate.academy.app.dto.cartitem.UpdateCartItemRequestDto;
 import mate.academy.app.dto.shoppingcart.ShoppingCartDto;
@@ -12,9 +11,9 @@ public interface ShoppingCartService {
 
     ShoppingCartDto getShoppingCart(Long userId);
 
-    CartItemDto addBookToCart(Long userId, CreateCartItemRequestDto requestDto);
+    ShoppingCartDto addBookToCart(Long userId, CreateCartItemRequestDto requestDto);
 
-    CartItemDto updateCartItemQuantity(Long userId,
+    ShoppingCartDto updateCartItemQuantity(Long userId,
                                                 Long cartItemId,
                                                 UpdateCartItemRequestDto requestDto);
 
