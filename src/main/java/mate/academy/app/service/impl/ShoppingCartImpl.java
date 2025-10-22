@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ShoppingCartImpl implements ShoppingCartService {
 
     private static final String SHOPPING_CART_NOT_FOUND_ERROR
@@ -36,16 +37,13 @@ public class ShoppingCartImpl implements ShoppingCartService {
     private final CartItemMapper cartItemMapper;
 
     @Override
-    @Transactional
-    public ShoppingCartDto createShoppingCart(User user) {
+    public void createShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         shoppingCartRepository.save(shoppingCart);
-        return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
-    @Transactional
     public ShoppingCartDto getShoppingCart(Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
@@ -54,7 +52,6 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
-    @Transactional
     public ShoppingCartDto addBookToCart(Long userId, CreateCartItemRequestDto requestDto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
@@ -81,7 +78,6 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
-    @Transactional
     public ShoppingCartDto updateCartItemQuantity(Long userId,
                                               Long cartItemId,
                                               UpdateCartItemRequestDto requestDto) {
@@ -98,7 +94,6 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
-    @Transactional
     public void deleteCartItem(Long userId, Long cartItemId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR

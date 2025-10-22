@@ -7,7 +7,7 @@ import mate.academy.app.model.User;
 
 public interface ShoppingCartService {
 
-    ShoppingCartDto createShoppingCart(User user);
+    void createShoppingCart(User user);
 
     ShoppingCartDto getShoppingCart(Long userId);
 
