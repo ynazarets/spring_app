@@ -7,8 +7,6 @@ import mate.academy.app.dto.order.UpdateOrderStatusRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface OrderService {
 
     void createNewOrder(Long userId, PlaceOrderRequestDto orderRequestDto);
@@ -18,5 +16,4 @@ public interface OrderService {
     void updateOrderStatus(UpdateOrderStatusRequestDto requestDto, Long orderId);
 
     Page<OrderItemResponseDto> getAllItems(Long userId, Long orderId, Pageable pageable);
-
 }

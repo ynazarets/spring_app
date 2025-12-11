@@ -11,7 +11,6 @@ import mate.academy.app.model.User;
 import mate.academy.app.service.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,10 +62,10 @@ public class OrderController {
     @Operation(summary = "get all items",
             description = "get all items by order id")
     Page<OrderItemResponseDto> getOrderItemById(@AuthenticationPrincipal UserDetails userDetails,
-                                                @PathVariable Long OrderId,
+                                                @PathVariable Long orderId,
                                                 Pageable pageable) {
         Long userId = ((User) userDetails).getId();
-        return orderService.getAllItems(userId, OrderId, pageable);
+        return orderService.getAllItems(userId, orderId, pageable);
     }
 
 }

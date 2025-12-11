@@ -1,11 +1,11 @@
 package mate.academy.app.dto.order;
 
-import lombok.Getter;
-import lombok.Setter;
-import mate.academy.app.model.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import mate.academy.app.model.enums.OrderStatus;
 
 @Getter
 @Setter
