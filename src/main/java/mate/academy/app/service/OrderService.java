@@ -15,5 +15,6 @@ public interface OrderService {
 
     void updateOrderStatus(UpdateOrderStatusRequestDto requestDto, Long orderId);
 
-    Page<OrderItemResponseDto> getAllItems(Long userId, Long orderId, Pageable pageable);
+    OrderItemResponseDto getOrderItemById(Long userId, Long orderId,
+                                           Long itemId);
 }

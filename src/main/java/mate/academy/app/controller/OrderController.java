@@ -48,24 +48,23 @@ public class OrderController {
         return orderService.getAllOrdersByUserId(userId, pageable);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{orderId}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update order status.",
             description = "Update status from admin by id")
     void updateOrderStatus(@RequestBody @Valid UpdateOrderStatusRequestDto requestDto,
-                           Long orderId) {
+                           @PathVariable Long orderId) {
         orderService.updateOrderStatus(requestDto, orderId);
     }
 
-    @GetMapping("/{id}/items")
+    @GetMapping("/{orderId}/items/{itemId}")
     @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "get all items",
-            description = "get all items by order id")
-    Page<OrderItemResponseDto> getOrderItemById(@AuthenticationPrincipal UserDetails userDetails,
-                                                @PathVariable Long orderId,
-                                                Pageable pageable) {
+    @Operation(summary = "Retrieve a specific OrderItem",
+            description = "Retrieve a specific OrderItem within an order by its ID")
+    OrderItemResponseDto getOrderItemById(@AuthenticationPrincipal UserDetails userDetails,
+                                          @PathVariable Long orderId,
+                                          @PathVariable Long itemId) {
         Long userId = ((User) userDetails).getId();
-        return orderService.getAllItems(userId, orderId, pageable);
+        return orderService.getOrderItemById(userId, orderId, itemId);
     }
-
 }

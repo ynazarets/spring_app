@@ -72,10 +72,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderItemResponseDto> getAllItems(Long userId, Long orderId, Pageable pageable) {
-        Page<OrderItem> orderItemPage = orderRepository
-                .findAllByOrderIdAndUserId(orderId, userId, pageable);
-        return orderItemPage.map(orderItemMapper::toDto);
+    public OrderItemResponseDto getOrderItemById(Long userId, Long orderId, Long itemId) {
+        OrderItem orderItem = orderRepository
+                .findOrderItemByIdAndOrderIdAndOrderUserId(itemId, orderId, userId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Order item not found with ID: " + itemId
+                                + " for order: " + orderId));
+        return orderItemMapper.toDto(orderItem);
     }
 
     private Order createOrder(User user,

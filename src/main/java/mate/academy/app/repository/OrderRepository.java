@@ -1,5 +1,6 @@
 package mate.academy.app.repository;
 
+import java.util.Optional;
 import mate.academy.app.model.Order;
 import mate.academy.app.model.OrderItem;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findAllByUserIdWithItemsAndBooks(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT oi FROM OrderItem oi "
-            + "LEFT JOIN FETCH oi.book b "
-            + "WHERE oi.order.id = :orderId AND oi.order.user.id = :userId")
-    Page<OrderItem> findAllByOrderIdAndUserId(@Param("orderId") Long orderId,
-                                              @Param("userId") Long userId,
-                                              Pageable pageable);
-
+            + "LEFT JOIN FETCH oi.book b " // Оптимизация для загрузки Book
+            + "WHERE oi.id = :itemId AND oi.order.id = :orderId AND oi.order.user.id = :userId")
+    Optional<OrderItem> findOrderItemByIdAndOrderIdAndOrderUserId(
+            @Param("itemId") Long itemId,
+            @Param("orderId") Long orderId,
+            @Param("userId") Long userId
+    );
 }

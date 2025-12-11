@@ -12,9 +12,8 @@ import mate.academy.app.model.enums.OrderStatus;
 public class OrderResponseDto {
     private Long id;
     private Long userId;
-    private OrderStatus status;
-    private BigDecimal total;
-    private LocalDateTime orderDate;
-    private String shippingAddress;
     private List<OrderItemResponseDto> orderItems;
+    private LocalDateTime orderDate;
+    private BigDecimal total;
+    private OrderStatus status;
 }
