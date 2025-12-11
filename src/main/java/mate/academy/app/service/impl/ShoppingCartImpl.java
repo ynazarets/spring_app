@@ -104,4 +104,14 @@ public class ShoppingCartImpl implements ShoppingCartService {
                         + cartItemId));
         cartItemRepository.delete(cartItem);
     }
+
+    @Override
+    @Transactional
+    public void clearShoppingCart(Long userId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException(SHOPPING_CART_NOT_FOUND_ERROR
+                        + userId));
+        shoppingCart.getCartItems().clear();
+
+    }
 }
