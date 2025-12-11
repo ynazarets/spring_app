@@ -13,6 +13,4 @@ public interface OrderMapper {
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "status", source = "orderStatus")
     OrderResponseDto toDto(Order order);
-
-    List<OrderResponseDto> toDtoList(List<Order> orders);
 }
