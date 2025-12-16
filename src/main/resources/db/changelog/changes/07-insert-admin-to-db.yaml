@@ -2,17 +2,17 @@ databaseChangeLog:
   - changeSet:
       id: 07-insert-admin-user
       author: root
-      comment: Adding the first administrator user (admin@library.com) and assigning him the ADMIN role.
+      comment: Adding the first administrator user (administrator@library.com) and assigning him the ADMIN role.
       changes:
         - insert:
             tableName: users
             columns:
               - column:
                   name: email
-                  value: admin@library.com
+                  value: administrator@library.com
               - column:
                   name: password
-                  value: $2a$10$wL4P9E5yJ8iS3TjK8m/yL.6iX0P6H0A7wV0YV6B3H8e2G3A6D6I9S
+                  value: $2a$10$uq9C.SyFEAyBpQ0d5jRu.OKY642/WAtptD2mZkqz48XWIs01sn6j.
               - column:
                   name: first_name
                   value: Admin
@@ -27,7 +27,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_id
-                  valueComputed: (SELECT id FROM users WHERE email = 'admin@library.com')
+                  valueComputed: (SELECT id FROM users WHERE email = 'administrator@library.com')
               - column:
                   name: role_id
                   valueComputed: (SELECT id FROM roles WHERE role_name = 'ADMIN')
