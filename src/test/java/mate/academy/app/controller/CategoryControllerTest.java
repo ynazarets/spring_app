@@ -1,4 +1,4 @@
 package mate.academy.app.controller;
 
-public class BookController {
+public class CategoryControllerTest {
 }
