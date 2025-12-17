@@ -1,6 +1,5 @@
 package mate.academy.app.service;
 
-import io.swagger.v3.oas.annotations.Operation;
 import mate.academy.app.dto.book.BookDto;
 import mate.academy.app.dto.book.CreateBookRequestDto;
 import mate.academy.app.exception.EntityNotFoundException;
@@ -23,11 +22,9 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
