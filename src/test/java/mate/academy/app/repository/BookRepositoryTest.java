@@ -31,7 +31,7 @@ public class BookRepositoryTest {
     public void findAllByCategoryId_ValidCategoryId_ShouldReturnListOfBooks() {
         Category category = new Category();
         category.setName("Test");
-        categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
 
         Book book = new Book();
         book.setTitle("TitleTest");
@@ -41,7 +41,8 @@ public class BookRepositoryTest {
         book.setCategories(Set.of(category));
         bookRepository.save(book);
 
-        Page<Book> actual = bookRepository.findAllByCategoriesId(1L, Pageable.unpaged());
+        Page<Book> actual = bookRepository.findAllByCategoriesId(savedCategory.getId(), Pageable.unpaged());
         assertEquals(1, actual.getContent().size());
+        assertEquals("TitleTest", actual.getContent().get(0).getTitle());
     }
 }
