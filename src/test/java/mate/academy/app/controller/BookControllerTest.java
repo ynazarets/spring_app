@@ -26,9 +26,13 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -114,4 +118,125 @@ public class BookControllerTest {
         Assertions.assertNotNull(actualDto.getId());
         EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id");
     }
+
+    @Test
+    @DisplayName("""
+            da
+            """)
+    public void findAll_ValidRequest_ShouldReturnPageOfBooksDDto() throws Exception {
+        MvcResult result = mockMvc.perform(
+                        get("/books")
+                                .param("page", "0")
+                                .param("size", "10")
+                                .param("sort", "title,asc")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+        String jsonResponse = result.getResponse().getContentAsString();
+
+        com.fasterxml.jackson.databind.JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+        com.fasterxml.jackson.databind.JsonNode contentNode = jsonNode.get("content");
+
+        List<BookDto> actualBooks = objectMapper.readValue(contentNode.traverse(),
+                objectMapper.getTypeFactory().constructCollectionType(List.class, BookDto.class));
+        assertEquals(3, actualBooks.size());
+        assertEquals("Book 1", actualBooks.get(0).getTitle());
+    }
+
+    @Test
+    @DisplayName("""
+            da
+            """)
+    public void getById_ValidId_ShouldReturnBookDto() throws Exception {
+        Long requestId = 1L;
+
+        BookDto expectedDto = new BookDto();
+        expectedDto.setId(requestId);
+        expectedDto.setTitle("Book 1");
+        expectedDto.setAuthor("Author 1");
+        expectedDto.setIsbn("123456789");
+        expectedDto.setPrice(BigDecimal.valueOf(10.35));
+
+        String jsonResponse = objectMapper.writeValueAsString(expectedDto);
+
+        MvcResult result = mockMvc.perform(
+                        get("/books/" + requestId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        BookDto actualDto = objectMapper.readValue(result.getResponse().getContentAsString(), BookDto.class);
+        EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id");
+    }
+
+    @Test
+    @DisplayName("""
+            da
+            """)
+    public void search_ValidRequest_ShouldReturnListOfBooks() throws Exception {
+
+        CreateBookRequestDto requestDto = new CreateBookRequestDto();
+        requestDto.setTitle("Book 2");
+        requestDto.setAuthor("Author 2");
+
+        String searchTitle = "Book 2";
+        String searchAuthor = "Author 2";
+
+        MvcResult result = mockMvc.perform(
+                        get("/books/search")
+                                .param("title", searchTitle)
+                                .param("author", searchAuthor)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+        String jsonResponse = result.getResponse().getContentAsString();
+
+        List<BookDto> actualBooks = objectMapper.readValue(
+                jsonResponse,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, BookDto.class)
+        );
+        assertNotNull(actualBooks);
+        assertEquals(1, actualBooks.size());
+        assertEquals(searchTitle, actualBooks.get(0).getTitle());
+        assertEquals(searchAuthor, actualBooks.get(0).getAuthor());
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
