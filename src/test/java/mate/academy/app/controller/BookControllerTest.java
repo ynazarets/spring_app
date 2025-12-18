@@ -84,7 +84,7 @@ public class BookControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     @DisplayName("""
-            da
+            Create a new book with valid request DTO - Should return 201 Created and BookDto
             """)
     @Sql(
             scripts = "classpath:database/books/delete-test-book.sql",
@@ -121,7 +121,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("""
-            da
+            Find all books - Should return a paginated and sorted list of BookDto
             """)
     public void findAll_ValidRequest_ShouldReturnPageOfBooksDDto() throws Exception {
         MvcResult result = mockMvc.perform(
@@ -146,7 +146,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("""
-            da
+            Get book by ID: should return 200 OK and correct book details for valid ID
             """)
     public void getById_ValidId_ShouldReturnBookDto() throws Exception {
         Long requestId = 1L;
@@ -173,7 +173,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("""
-            da
+            Search books: valid title and author parameters should return matching books list
             """)
     public void search_ValidRequest_ShouldReturnListOfBooks() throws Exception {
 
@@ -202,41 +202,5 @@ public class BookControllerTest {
         assertEquals(1, actualBooks.size());
         assertEquals(searchTitle, actualBooks.get(0).getTitle());
         assertEquals(searchAuthor, actualBooks.get(0).getAuthor());
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

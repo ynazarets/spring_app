@@ -1,9 +1,7 @@
 package mate.academy.app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import mate.academy.app.dto.book.BookDto;
 import mate.academy.app.dto.category.CategoryDto;
 import mate.academy.app.dto.category.CreateCategoryRequestDto;
 import org.junit.jupiter.api.AfterAll;
@@ -24,8 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -86,7 +82,7 @@ public class CategoryControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     @DisplayName("""
-            da
+            Create a new category - Should return 201 Created and valid CategoryDto
             """)
     @Sql(
             scripts = "classpath:database/categories/delete-test-category.sql",
@@ -119,7 +115,7 @@ public class CategoryControllerTest {
 
     @Test
     @DisplayName("""
-            dLLLa
+            Find all categories - Should return a paginated and sorted page of CategoryDto
             """)
     public void getAll_validRequest_ShouldReturnPageOfCategoryDto() throws Exception {
         MvcResult result = mockMvc.perform(
@@ -145,7 +141,7 @@ public class CategoryControllerTest {
 
     @Test
     @DisplayName("""
-            dBJa
+            Get category by existing ID - Should return valid CategoryDto
             """)
     public void getById_ValidId_ShouldReturnCategoryDto() throws Exception {
         Long RequestId = 1L;
@@ -171,7 +167,7 @@ public class CategoryControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     @DisplayName("""
-            dBJa
+            Update existing category - Should return 201 Created and updated CategoryDto
             """)
     public void updateCategory_ValidId_ShouldUpdateCategory() throws Exception {
         Long requestId = 1L;

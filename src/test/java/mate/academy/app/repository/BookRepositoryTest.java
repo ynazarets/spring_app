@@ -26,7 +26,7 @@ public class BookRepositoryTest {
 
     @Test
     @DisplayName("""
-            gf
+            Find all books by category ID - Should return correct page of books for valid ID
             """)
     public void findAllByCategoryId_ValidCategoryId_ShouldReturnListOfBooks() {
         Category category = new Category();

@@ -40,7 +40,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Find all categories with pagination - Should return a page of mapped CategoryDto
             """)
     public void findAll_ValidRequest_ShouldReturnListOfCategoryDto() {
         Pageable pageable = PageRequest.of(0, 10);
@@ -67,7 +67,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Get category by ID - Should return valid CategoryDto when category exists
             """)
     public void getById_ValidId_ShouldReturnCategoryDto() {
         Long requestId = 1L;
@@ -89,7 +89,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Get category by invalid ID - Should throw EntityNotFoundException when category is missing
             """)
     public void getById_InvalidId_ShouldReturnNull() {
         Long requestId = 1L;
@@ -104,7 +104,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("""
-    
+            Delete category by ID - Should successfully call repository delete method
             """)
     public void deleteById_ValidId_ShouldDeleteCategory() {
         Long id = 1L;
@@ -114,7 +114,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Update existing category - Should find category, apply changes and return updated CategoryDto
             """)
     public void update_ValidId_ShouldUpdateCategory() {
         Long id = 1L;
@@ -136,30 +136,30 @@ public class CategoryServiceTest {
         verify(categoryRepository, times(1)).findById(id);
     }
 
-    @Test
-    @DisplayName("""
-            
-            """)
-    public void save_ValidCategoryDto_ShouldSaveCategory() {
-        CreateCategoryRequestDto createCategoryDto = new CreateCategoryRequestDto();
-        createCategoryDto.setName("Test");
+        @Test
+        @DisplayName("""
+                Save category - Should successfully map DTO, save entity and return valid CategoryDto
+                """)
+        public void save_ValidCategoryDto_ShouldSaveCategory() {
+            CreateCategoryRequestDto createCategoryDto = new CreateCategoryRequestDto();
+            createCategoryDto.setName("Test");
 
-        Category category = new Category();
-        category.setName(createCategoryDto.getName());
+            Category category = new Category();
+            category.setName(createCategoryDto.getName());
 
-        Category savedCategory = new Category();
-        savedCategory.setId(1L);
-        savedCategory.setName(createCategoryDto.getName());
+            Category savedCategory = new Category();
+            savedCategory.setId(1L);
+            savedCategory.setName(createCategoryDto.getName());
 
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setId(savedCategory.getId());
-        categoryDto.setName(savedCategory.getName());
+            CategoryDto categoryDto = new CategoryDto();
+            categoryDto.setId(savedCategory.getId());
+            categoryDto.setName(savedCategory.getName());
 
-        when(categoryMapper.toCategory(createCategoryDto)).thenReturn(category);
-        when(categoryRepository.save(category)).thenReturn(savedCategory);
-        when(categoryMapper.toCategoryDto(savedCategory)).thenReturn(categoryDto);
+            when(categoryMapper.toCategory(createCategoryDto)).thenReturn(category);
+            when(categoryRepository.save(category)).thenReturn(savedCategory);
+            when(categoryMapper.toCategoryDto(savedCategory)).thenReturn(categoryDto);
 
-        CategoryDto actualDto = categoryService.save(createCategoryDto);
-        assertEquals(categoryDto, actualDto);
-    }
+            CategoryDto actualDto = categoryService.save(createCategoryDto);
+            assertEquals(categoryDto, actualDto);
+        }
 }

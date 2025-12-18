@@ -47,7 +47,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("""
-           
+           Save book - Should successfully map DTO, save entity and return valid BookDto
             """)
     public void save_ValidCreateBookRequestDto_ShouldReturnBookDto() {
         CreateBookRequestDto requestDto = new CreateBookRequestDto();
@@ -85,7 +85,7 @@ public class BookServiceTest {
     }
     @Test
     @DisplayName("""
-            
+            Get book by ID - Should return valid BookDto when book exists
             """)
     public void getById_ValidId_ShouldReturnBookDto() {
         Long RequestId = 1L;
@@ -110,7 +110,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Find all books with pagination - Should return a page of mapped BookDto
             """)
     public void findAll_ValidRequest_ShouldReturnListOfBookDto() {
         Pageable pageable = PageRequest.of(0, 10);
@@ -144,7 +144,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Delete book by ID - Should call repository delete method once
             """)
     public void deleteById_validId_successDeleted() {
         Long id = 1L;
@@ -154,7 +154,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Update existing book - Should find book, apply changes and return updated BookDto
             """)
     public void update_validId_successUpdated() {
         Long id = 1L;
@@ -187,7 +187,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("""
-            
+            Update book with invalid ID - Should throw EntityNotFoundException when book not found
             """)
     public void update_invalidId_notFound() {
         Long id = 1L;
@@ -201,6 +201,5 @@ public class BookServiceTest {
         assertThrows(EntityNotFoundException.class,
                 () -> bookService.update(id, requestDto));
         verifyNoInteractions(bookMapper, categoryMapperHelper);
-
     }
 }
