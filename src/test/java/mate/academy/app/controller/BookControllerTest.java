@@ -151,14 +151,15 @@ public class BookControllerTest {
             Get book by ID: should return 200 OK and correct book details for valid ID
             """)
     public void getById_ValidId_ShouldReturnBookDto() throws Exception {
-        Long requestId = 1L;
+        Long requestId = 999L;
 
         BookDto expectedDto = new BookDto();
         expectedDto.setId(requestId);
         expectedDto.setTitle("Book 1");
         expectedDto.setAuthor("Author 1");
-        expectedDto.setIsbn("123456789");
-        expectedDto.setPrice(BigDecimal.valueOf(10.35));
+        expectedDto.setIsbn("1234567890");
+        expectedDto.setPrice(BigDecimal.valueOf(10));
+        expectedDto.setCategoriesId(Collections.emptyList());
 
         MvcResult result = mockMvc.perform(
                         get("/books/" + requestId)
