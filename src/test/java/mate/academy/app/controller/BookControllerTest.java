@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import mate.academy.app.dto.book.BookDto;
 import mate.academy.app.dto.book.CreateBookRequestDto;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,10 +25,12 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -102,6 +103,7 @@ public class BookControllerTest {
         expectedDto.setAuthor(requestDto.getAuthor());
         expectedDto.setIsbn(requestDto.getIsbn());
         expectedDto.setPrice(requestDto.getPrice());
+        expectedDto.setCategoriesId(Collections.emptyList());
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
@@ -114,9 +116,9 @@ public class BookControllerTest {
                 .andReturn();
 
         BookDto actualDto = objectMapper.readValue(result.getResponse().getContentAsString(), BookDto.class);
-        Assertions.assertNotNull(actualDto);
-        Assertions.assertNotNull(actualDto.getId());
-        EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id");
+        assertNotNull(actualDto);
+        assertNotNull(actualDto.getId());
+        assertTrue(EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id"));
     }
 
     @Test
@@ -157,8 +159,6 @@ public class BookControllerTest {
         expectedDto.setAuthor("Author 1");
         expectedDto.setIsbn("123456789");
         expectedDto.setPrice(BigDecimal.valueOf(10.35));
-
-        String jsonResponse = objectMapper.writeValueAsString(expectedDto);
 
         MvcResult result = mockMvc.perform(
                         get("/books/" + requestId)
@@ -202,5 +202,37 @@ public class BookControllerTest {
         assertEquals(1, actualBooks.size());
         assertEquals(searchTitle, actualBooks.get(0).getTitle());
         assertEquals(searchAuthor, actualBooks.get(0).getAuthor());
+    }
+
+    @Test
+    @DisplayName("""
+            Get book by ID: request with invalid ID should return 404 status and error message
+            """)
+    public void getById_InvalidId_ShouldReturn404NotFound() throws Exception {
+        Long invalidId = 1000L;
+        mockMvc.perform(
+                        get("/books/" + invalidId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNotFound());
+    }
+
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @Test
+    @DisplayName("""
+            Create book - Should return 400 Bad Request when input data is invalid
+            """)
+    public void createBook_InvalidInput_ShouldReturnException() throws Exception {
+        CreateBookRequestDto requestDto = new CreateBookRequestDto();
+        requestDto.setTitle(null);
+        requestDto.setAuthor(null);
+        requestDto.setIsbn(null);
+        requestDto.setPrice(null);
+        mockMvc.perform(
+                post("/books")
+                        .content(objectMapper.writeValueAsString(requestDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isBadRequest());
     }
 }

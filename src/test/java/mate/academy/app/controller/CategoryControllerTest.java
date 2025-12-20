@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -110,7 +111,7 @@ public class CategoryControllerTest {
 
         assertNotNull(actual);
         assertNotNull(actual.getId());
-        EqualsBuilder.reflectionEquals(expectedDto, actual, "id");
+        assertTrue(EqualsBuilder.reflectionEquals(expectedDto, actual, "id"));
     }
 
     @Test
@@ -161,7 +162,7 @@ public class CategoryControllerTest {
                 CategoryDto.class
         );
         assertNotNull(actualDto);
-        EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id");
+        assertTrue(EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id"));
     }
 
     @WithMockUser(username = "admin", roles = {"ADMIN"})
