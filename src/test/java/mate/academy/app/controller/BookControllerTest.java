@@ -168,7 +168,7 @@ public class BookControllerTest {
                 .andReturn();
 
         BookDto actualDto = objectMapper.readValue(result.getResponse().getContentAsString(), BookDto.class);
-        EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id");
+        assertTrue(EqualsBuilder.reflectionEquals(expectedDto, actualDto, "id"));
     }
 
     @Test
