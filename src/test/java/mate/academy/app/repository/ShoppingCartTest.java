@@ -28,8 +28,6 @@ public class ShoppingCartTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
     private CartItemRepository cartItemRepository;
 
     @Test
