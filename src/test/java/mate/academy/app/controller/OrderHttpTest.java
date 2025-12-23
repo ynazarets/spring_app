@@ -1,9 +1,7 @@
 package mate.academy.app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import mate.academy.app.dto.order.OrderItemResponseDto;
 import mate.academy.app.dto.order.PlaceOrderRequestDto;
 import mate.academy.app.dto.order.UpdateOrderStatusRequestDto;
 import mate.academy.app.model.Order;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -102,11 +99,10 @@ public class OrderHttpTest {
         requestDto.setShippingAddress("newAddress");
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-        MvcResult result = mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/orders")
                         .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
 
         List<Order> orders = orderRepository.findAllByUserIdWithItemsAndBooks(1L, Pageable.unpaged())
                 .getContent();
@@ -131,11 +127,10 @@ public class OrderHttpTest {
     requestDto.setStatus(OrderStatus.valueOf("DELIVERED"));
     String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-    MvcResult result = mockMvc.perform(patch("/orders/" + orderId)
-                    .content(jsonRequest)
-                    .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
+   mockMvc.perform(patch("/orders/" + orderId)
+                   .content(jsonRequest)
+                   .contentType(MediaType.APPLICATION_JSON))
+           .andExpect(status().isOk());
 
         Order actualOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AssertionError("Order 100 not found in DB"));

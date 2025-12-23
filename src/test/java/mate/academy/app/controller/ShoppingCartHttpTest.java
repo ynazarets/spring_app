@@ -3,7 +3,6 @@ package mate.academy.app.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import mate.academy.app.dto.cartitem.CreateCartItemRequestDto;
-import mate.academy.app.dto.shoppingcart.ShoppingCartDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -84,14 +82,13 @@ public class ShoppingCartHttpTest {
     @WithUserDetails("John@gmail.com")
     @Test
     public void getShoppingCart_validUserId_ShouldReturnShoppingCart() throws Exception {
-        MvcResult result = mockMvc.perform(
-                        get("/cart")
-                                .contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(
+                get("/cart")
+                        .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").value(1))
-                .andExpect(jsonPath("$.cartItems").isNotEmpty())
-                .andReturn();
+                .andExpect(jsonPath("$.cartItems").isNotEmpty());
     }
 
     @DisplayName("""
