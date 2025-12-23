@@ -147,12 +147,11 @@ public class OrderHttpTest {
         Long orderId = 100L;
         Long itemId = 100L;
 
-        MvcResult result = mockMvc.perform(get("/orders/{orderId}/items/{itemId}", orderId, itemId )
+        mockMvc.perform(get("/orders/{orderId}/items/{itemId}", orderId, itemId )
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(itemId))
-                .andExpect(jsonPath("$.bookId").exists())
-                .andReturn();
+                .andExpect(jsonPath("$.bookId").exists());
 
         Optional<OrderItem> actual = orderRepository.findOrderItemByIdAndOrderIdAndOrderUserId(itemId, orderId, userId);
         assertTrue("OrderItem should exist in DB", actual.isPresent());
