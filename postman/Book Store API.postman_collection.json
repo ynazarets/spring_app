@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "a391354e-0698-49c2-9ca5-f3ad1b62e84e",
+		"name": "Book Store API",
+		"description": "Before using the query collection, remember to log in as a user or admin (**depending on the database queries you are running**).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48419302",
+		"_collection_link": "https://www.postman.com/nazarets1111-3518147/workspace/xzcczx/collection/48419302-a391354e-0698-49c2-9ca5-f3ad1b62e84e?action=share&source=collection_link&creator=48419302"
+	},
+	"item": [
+		{
+			"name": "Book Controller",
+			"item": [
+				{
+					"name": "Create new Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Search with param",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category Controller",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categories by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Categories",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Books by Category id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shopping Cart Controller",
+			"item": [
+				{
+					"name": "Get ShoppingCart by user id(auto)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Book to CartItem by user id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove CartItem by its id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				},
+				{
+					"name": "Change the quantity in CartItem by",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderItemController",
+			"item": [
+				{
+					"name": "Create new Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Orders by user id(auto)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a specific OrderItem within an order by its ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Only for USER"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication Controller",
+			"item": [
+				{
+					"name": "login as ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/info?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"info"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Registration new User",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Login as USER",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "cartItemId",
+			"value": ""
+		},
+		{
+			"key": "order_id",
+			"value": ""
+		},
+		{
+			"key": "item_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "base_url",
+			"value": "https://template.postman-echo.com"
+		},
+		{
+			"key": "jwt_token",
+			"value": ""
+		},
+		{
+			"key": "admin_email",
+			"value": ""
+		},
+		{
+			"key": "admin_password",
+			"value": ""
+		},
+		{
+			"key": "user_email",
+			"value": ""
+		},
+		{
+			"key": "user_password",
+			"value": ""
+		}
+	]
+}
