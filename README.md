@@ -17,9 +17,20 @@ for customers and a secure management dashboard for administrators.
 * Testing: JUnit 5, Mockito, Testcontainers
 
 ## 🟢️ Running the Project
-1. Clone the repository
-2. Run `mvn clean package`
-3. Run via Docker: `docker-compose up`
+1. **Clone the repository and navigate to the folder:**
+   ```bash
+   git clone https://github.com/ynazarets/spring_app.git
+   cd spring_app
+   ```
+2. **Create .env file:**
+   Copy the template file to create your local environment configuration:
+   ```bash
+   cp .env.template .env
+3. Fill in the values:    
+    Open the .env file and provide your secret keys     
+    (especially MYSQLDB_USER, MYSQLDB_PASSWORD, MYSQLDB_DATABASE, and JWT_SECRET).
+4. Run `mvn clean package`
+5. Run via Docker: `docker-compose up --build -d`
 
 ## 📖 API Documentation
 The Swagger UI is available at: http://localhost:8081/swagger-ui/index.html.
@@ -31,7 +42,9 @@ The Swagger UI is available at: http://localhost:8081/swagger-ui/index.html.
 * Shopping Cart System: Persistent shopping carts where users can add, update, or remove items.
 * Order Processing: Automated conversion of cart items to orders with shipping information and status tracking.
 * Category Management: Organize books into logical categories for better navigation.
-  
+
+## 🗺️ Entities diagram
+![Project Diagram](https://github.com/user-attachments/assets/5485faab-db31-4820-8771-83c4c06955e0)
 
 ## 🗺️ Simplified project diagram
 ![Project Diagram](https://github.com/user-attachments/assets/e9635b2c-2237-49aa-9de6-139308f7a7be)
