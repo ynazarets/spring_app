@@ -16,7 +16,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uapp_user", "-pShepard27!" ]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u$${MYSQLDB_USER}", "-p$${MYSQLDB_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
