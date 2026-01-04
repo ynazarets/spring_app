@@ -33,7 +33,7 @@ for customers and a secure management dashboard for administrators.
 5. Run via Docker: `docker-compose up --build -d`
 
 ## 📖 API Documentation
-The Swagger UI is available at: http://localhost:8081/swagger-ui/index.html.
+The Swagger UI is available at: http://localhost:8080/swagger-ui/index.html.
 
 ## 📦 Key Features
 * Authentication & Authorization: Secure login/registration via JWT. Role-based access control  

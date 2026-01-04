@@ -47,9 +47,17 @@ public class SecurityConfig {
                                         "/error"
                                 )
                                 .permitAll()
-                                .requestMatchers(HttpMethod.GET, "/books/**")
+                                .requestMatchers(HttpMethod.GET,
+                                        "/books",
+                                        "/books/**",
+                                        "/api/books",
+                                        "/api/books/**")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.GET, "/categories/**")
+                                .requestMatchers(HttpMethod.GET,
+                                        "/api/categories",
+                                        "/api/categories/**",
+                                        "/categories",
+                                        "/categories/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
